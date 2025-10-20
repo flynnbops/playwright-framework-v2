@@ -1,0 +1,24 @@
+{
+  "name": "moj-tech-task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "docker:ui": "docker compose run --no-deps playwright",
+    "local:ui": "ENV=local playwright test --grep @ui --project=local-chromium",
+    "cloud:ui": "ENV=cloud playwright test --grep @ui --project=cloud-chromium",
+    "docker:api": "docker compose run --no-deps playwright --grep @api",
+    "local:api": "playwright test --grep @api --project=local-api",
+    "cloud:api": "playwright test --grep @api --project=cloud-api"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.53.1",
+    "@types/dotenv": "^8.2.3",
+    "@types/node": "^24.0.4",
+    "dotenv": "^16.5.0",
+    "zod": "^4.1.5"
+  }
+}
