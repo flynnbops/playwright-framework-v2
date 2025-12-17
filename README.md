@@ -60,7 +60,7 @@ npm run docker-compose:ui
 ```
 
 ### Docker only scrpts
-The `docker:ui` and `docker:api` scripts are only invoked inside the Docker-compose network. It means some tests can be run by default when we bring up the docker-compose stack with `docker-compose up`. 
+The `docker:ui` and `docker:api` scripts are only invoked inside the Docker compose network. It means some tests can be run by default when we bring up the docker compose stack with `docker compose up`. 
 
 ## Structure of project
 - `/sample-reports`: playwright reports of different test runs, with full trace enabled
@@ -71,7 +71,7 @@ The `docker:ui` and `docker:api` scripts are only invoked inside the Docker-comp
 
 While not requested for this exercise. I believe that being able to reliably run tests in many places including CI, is critical. So these elements of the project are **mandatory** as far as I'm concerned.
 - `Dockerfile`: to create a Playwright test runner image
-- `docker-compose.yml`: allows the test runner and application images to be run via docker compose
+- `dockercompose.yml`: allows the test runner and application images to be run via docker compose
 
 ## Test Rationale
  

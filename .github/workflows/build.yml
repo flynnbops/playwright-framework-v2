@@ -18,16 +18,16 @@ jobs:
       uses: docker/setup-compose-action@v1
 
     - name: Build Docker Compose stack
-      run: docker-compose build
+      run: docker compose build
 
     - name: Start UI and API services
-      run: docker-compose up -d saucedemo petstore
+      run: docker compose up -d saucedemo petstore
 
     - name: Run API tests
-      run: ENV=docker TRACE=on docker-compose run --remove-orphans --no-deps playwright npm run docker:api
+      run: ENV=docker TRACE=on docker compose run --remove-orphans --no-deps playwright npm run docker:api
 
     - name: Run UI tests
-      run: ENV=docker TRACE=on docker-compose run --remove-orphans --no-deps playwright npm run docker:ui
+      run: ENV=docker TRACE=on docker compose run --remove-orphans --no-deps playwright npm run docker:ui
 
     - name: Set timestamp for artifacts
       run: echo "TIMESTAMP=$(date +%Y%m%d-%H%M%S)" >> $GITHUB_ENV
