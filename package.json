@@ -1,15 +1,20 @@
 {
-  "name": "moj-tech-task",
+  "name": "playwright-framework-v2",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "docker:ui": "docker compose run --no-deps playwright",
+    "docker:ui": "ENV=docker playwright test --grep @ui --project=docker-chromium",
+    "docker:api": "ENV=docker playwright test --grep @api --project=api",
+
     "local:ui": "ENV=local playwright test --grep @ui --project=local-chromium",
+    "local:api": "ENV=local playwright test --grep @api --project=api",
+
     "cloud:ui": "ENV=cloud playwright test --grep @ui --project=cloud-chromium",
-    "docker:api": "docker compose run --no-deps playwright --grep @api",
-    "local:api": "playwright test --grep @api --project=local-api",
-    "cloud:api": "playwright test --grep @api --project=cloud-api"
+    "cloud:api": "ENV=cloud playwright test --grep @api --project=api",
+
+    "docker-compose:ui": "docker-compose up -d saucedemo petstore && ENV=docker docker-compose run --no-deps playwright npm run docker:ui",
+    "docker-compose:api": "docker-compose up -d saucedemo petstore && ENV=docker docker-compose run --no-deps playwright npm run docker:api"
   },
   "keywords": [],
   "author": "",

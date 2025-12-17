@@ -12,6 +12,8 @@ services:
       - SAUCELABS_URL=${SAUCELABS_URL:-http://saucedemo}
       - STANDARDUSER_EMAIL=standard_user
       - STANDARDUSER_PASSWORD=secret_sauce
+      - TRACE=${TRACE:-retain-on-first-failure}
+      - API_URL=${API_URL:-http://petstore:8080}
     depends_on:
       saucedemo:
         condition: service_healthy
@@ -42,7 +44,7 @@ services:
     ports:
       - ${PETSTORE_PORT:-5999}:8080
     healthcheck:
-      test: ["CMD", "wget", "-q", "localhost:8080/api/v3/store/inventory"]
+      test: ["CMD", "wget", "-q", "http://localhost:8080/api/v3/store/inventory"]
       interval: 10s
       timeout: 5s
       retries: 6

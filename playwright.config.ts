@@ -5,22 +5,27 @@ import path from 'path';
 
 // Determine env, fallback to 'local'
 const ENV = process.env.ENV || 'local';
+console.log(`Using environment: ${ENV}`);
+const API_URL = String(process.env.API_URL) || 'waggghhh';
+console.log(`Using API_URL: ${API_URL}`);
+
 type TraceLevel = 'on' | 'off' | 'retain-on-failure' | 'retain-on-first-failure';
 
+// Load corresponding .env file
+dotenv.config({ path: path.resolve(__dirname, `.env.${ENV}`) });
+
 const getTraceLevel = (): TraceLevel => {
-  const env = process.env.TRACE;
-  if (env === 'on' || env === 'off' || env === 'retain-on-failure' || env === 'retain-on-first-failure') {
-    return env;
+  const trace = process.env.TRACE;
+  if (trace === 'on' || trace === 'off' || trace === 'retain-on-failure' || trace === 'retain-on-first-failure') {
+    return trace;
   }
+  console.log(`Invalid TRACE value: '${trace}', using default 'retain-on-first-failure'`);
   return 'retain-on-first-failure';
 };
 
 const traceLevel = getTraceLevel();
 // Change the test id attribute to match the one used in the application
 const testIdAttribute = 'data-test'
-
-// Load corresponding .env file
-dotenv.config({ path: path.resolve(__dirname, `.env.${ENV}`) });
 
 // Left most of these settings as defaults
 export default defineConfig({
@@ -37,7 +42,7 @@ export default defineConfig({
       // html reporter intended for debugging and development
       ['html', { open: 'never' }]],
   use: {
-    trace: traceLevel,
+    trace: traceLevel
   },
 
   projects: [
@@ -73,7 +78,7 @@ export default defineConfig({
           testIdAttribute: testIdAttribute
         }
     },
-        {
+    {
       name: 'cloud-chromium',
       use: { 
         ...devices['Desktop Chrome'],
@@ -91,27 +96,10 @@ export default defineConfig({
         }
     },
     {
-      name: 'local-api',
+      name: 'api',
       use: {
-        baseURL: 'http://localhost:5999',
-      }
-    },
-    {
-      // Not implemented
-      // Ran out of time to finish this.
-      // Likely timing issues when trying to update the Pet.
-      // Where some retrying / timing logic would be useful
-      name: 'cloud-api',
-      use: {
-        baseURL: 'https://petstore3.swagger.io',
-      },
-    }
-    ,
-    {
-      name: 'docker-api',
-      use: {
-        baseURL: 'http://petstore:8080'
-      }
+        baseURL: API_URL,
+      } 
     }
   ]
 });
