@@ -1,0 +1,47 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Compose
+      uses: docker/setup-compose-action@v1
+
+    - name: Build Docker Compose stack
+      run: docker-compose build
+
+    - name: Start UI and API services
+      run: docker-compose up -d saucedemo petstore
+
+    - name: Run API tests
+      run: ENV=docker TRACE=on docker-compose run --remove-orphans --no-deps playwright npm run docker:api
+
+    - name: Run UI tests
+      run: ENV=docker TRACE=on docker-compose run --remove-orphans --no-deps playwright npm run docker:ui
+
+    - name: Set timestamp for artifacts
+      run: echo "TIMESTAMP=$(date +%Y%m%d-%H%M%S)" >> $GITHUB_ENV
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results-${{ env.TIMESTAMP }}
+        path: test-results/
+
+    - name: Upload Playwright report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-report-${{ env.TIMESTAMP }}
+        path: playwright-report/
