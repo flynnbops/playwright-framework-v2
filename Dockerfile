@@ -5,6 +5,7 @@ WORKDIR /src
 # Install dependencies
 COPY ["package.json", "."]
 COPY ["package-lock.json", "."]
+# May need to disable strict-ssl if behind a corporate proxy
 # RUN ["npm", "config", "set", "strict-ssl", "false"]
 RUN ["npm", "ci"]
 
@@ -13,5 +14,5 @@ COPY ["models/", "models/"]
 COPY ["tests/", "tests/"]
 COPY ["playwright.config.ts", "."]
 
-# Run UI tests
+# Run UI tests by default
 CMD ["npm", "run", "docker:ui"]

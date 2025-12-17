@@ -6,15 +6,13 @@
   "scripts": {
     "docker:ui": "ENV=docker playwright test --grep @ui --project=docker-chromium",
     "docker:api": "ENV=docker playwright test --grep @api --project=api",
-
     "local:ui": "ENV=local playwright test --grep @ui --project=local-chromium",
     "local:api": "ENV=local playwright test --grep @api --project=api",
-
     "cloud:ui": "ENV=cloud playwright test --grep @ui --project=cloud-chromium",
     "cloud:api": "ENV=cloud playwright test --grep @api --project=api",
-
-    "docker-compose:ui": "docker-compose up -d saucedemo petstore && ENV=docker docker-compose run --no-deps playwright npm run docker:ui",
-    "docker-compose:api": "docker-compose up -d saucedemo petstore && ENV=docker docker-compose run --no-deps playwright npm run docker:api"
+    "docker-compose:ui": "docker-compose up -d saucedemo petstore && docker-compose build playwright && ENV=docker TRACE=on docker-compose run --remove-orphans --no-deps playwright npm run docker:ui",
+    "docker-compose:api": "docker-compose up -d saucedemo petstore && docker-compose build playwright && ENV=docker TRACE=on docker-compose run --remove-orphans --no-deps playwright npm run docker:api",
+    "report:open": "playwright show-report"
   },
   "keywords": [],
   "author": "",

@@ -3,10 +3,10 @@ import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
 import path from 'path';
 
-// Determine env, fallback to 'local'
+// Determine envs, fallback to 'local'
 const ENV = process.env.ENV || 'local';
 console.log(`Using environment: ${ENV}`);
-const API_URL = String(process.env.API_URL) || 'waggghhh';
+const API_URL = String(process.env.API_URL) || 'http://localhost:5999';
 console.log(`Using API_URL: ${API_URL}`);
 
 type TraceLevel = 'on' | 'off' | 'retain-on-failure' | 'retain-on-first-failure';
@@ -17,6 +17,7 @@ dotenv.config({ path: path.resolve(__dirname, `.env.${ENV}`) });
 const getTraceLevel = (): TraceLevel => {
   const trace = process.env.TRACE;
   if (trace === 'on' || trace === 'off' || trace === 'retain-on-failure' || trace === 'retain-on-first-failure') {
+    console.log(`TRACE value: ${trace}`)
     return trace;
   }
   console.log(`Invalid TRACE value: '${trace}', using default 'retain-on-first-failure'`);

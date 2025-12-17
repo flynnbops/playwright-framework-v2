@@ -36,7 +36,7 @@ npm run cloud:ui
 
 #### Test and application inside Docker compose
 ```shell
-npm run docker:ui
+npm run docker-compose:ui
 ```
 
 ### Run API tests
@@ -56,8 +56,11 @@ npm run cloud:api
 
 #### Test and application inside Docker compose
 ```shell
-npm run docker:api
+npm run docker-compose:ui
 ```
+
+### Docker only scrpts
+The `docker:ui` and `docker:api` scripts are only invoked inside the Docker-compose network. It means some tests can be run by default when we bring up the docker-compose stack with `docker-compose up`. 
 
 ## Structure of project
 - `/sample-reports`: playwright reports of different test runs, with full trace enabled
