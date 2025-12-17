@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import type { PlaywrightTestOptions } from '@playwright/test';
 
 import dotenv from 'dotenv';
 import path from 'path';
@@ -28,6 +29,15 @@ const traceLevel = getTraceLevel();
 // Change the test id attribute to match the one used in the application
 const testIdAttribute = 'data-test'
 
+// Browser configurations
+const desktopChrome: Partial<PlaywrightTestOptions> = { ...devices['Desktop Chrome'], testIdAttribute };
+const authenticatedChrome: Partial<PlaywrightTestOptions> = { ...desktopChrome, storageState: 'playwright/.auth/standard-user.json' };
+const unauthenticatedChrome: Partial<PlaywrightTestOptions> = desktopChrome;
+
+const mobileSafariLandScape: Partial<PlaywrightTestOptions> = { ...devices['iPhone 13'], testIdAttribute, viewport: { width: 844, height: 390 } };
+const authenticatedSafari: Partial<PlaywrightTestOptions> = { ...mobileSafariLandScape, storageState: 'playwright/.auth/standard-user.json' };
+const unauthenticatedSafari: Partial<PlaywrightTestOptions> = mobileSafariLandScape;
+
 // Left most of these settings as defaults
 export default defineConfig({
   testDir: './tests',
@@ -48,53 +58,24 @@ export default defineConfig({
 
   projects: [
     {
-      name: 'docker-chromium',
-      use: { ...devices['Desktop Chrome'],
-          testIdAttribute: testIdAttribute,
-          storageState: 'playwright/.auth/standard-user.json',
-      },
-      dependencies:['docker-authenticate']
+      name: 'desktop-chromium-authenticated',
+      use: authenticatedChrome,
+      dependencies:['desktop-chromium-unauthenticated']
     },
     {
-      name: 'docker-authenticate',
+      name: 'desktop-chromium-unauthenticated',
       testMatch: '**/authenticate.ts',
-        use: { ...devices['Desktop Chrome'],
-          testIdAttribute: testIdAttribute
-        }
+      use: unauthenticatedChrome
     },
     {
-      name: 'local-chromium',
-      use: { 
-        ...devices['Desktop Chrome'],
-        testIdAttribute: testIdAttribute,
-        storageState: 'playwright/.auth/standard-user.json'
-      },
-      dependencies:['local-authenticate']
+      name: 'safari-authenticated',
+      use: authenticatedSafari,
+      dependencies:['safari-unauthenticated']
     },
     {
-      name: 'local-authenticate',
+      name: 'safari-unauthenticated',
       testMatch: '**/authenticate.ts',
-        use: { 
-          ...devices['Desktop Chrome'],
-          testIdAttribute: testIdAttribute
-        }
-    },
-    {
-      name: 'cloud-chromium',
-      use: { 
-        ...devices['Desktop Chrome'],
-        testIdAttribute: testIdAttribute,
-        storageState: 'playwright/.auth/standard-user.json',
-      },
-      dependencies:['cloud-authenticate']
-    },
-    {
-      name: 'cloud-authenticate',
-      testMatch: '**/authenticate.ts',
-        use: { 
-          ...devices['Desktop Chrome'],
-          testIdAttribute: testIdAttribute,
-        }
+      use: unauthenticatedSafari
     },
     {
       name: 'api',
