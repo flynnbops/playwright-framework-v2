@@ -13,7 +13,7 @@
     "docker-compose:ui": "docker compose up -d saucedemo petstore && docker compose build playwright && ENV=docker TRACE=on docker compose run --remove-orphans --no-deps playwright npm run docker:ui",
     "docker-compose:api": "docker compose up -d saucedemo petstore && docker compose build playwright && ENV=docker TRACE=on docker compose run --remove-orphans --no-deps playwright npm run docker:api",
     "report:open": "playwright show-report",
-    "contract": "playwright test --project=contract"
+    "contract": "playwright test --project=contract --workers=1"
   },
   "keywords": [],
   "author": "",
