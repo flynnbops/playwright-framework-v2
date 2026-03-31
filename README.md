@@ -63,17 +63,17 @@ npm run docker-compose:ui
 The `docker:ui` and `docker:api` scripts are only invoked inside the Docker compose network. It means some tests can be run by default when we bring up the docker compose stack with `docker compose up`. 
 
 ## Structure of project
-- `/sample-reports`: playwright reports of different test runs, with full trace enabled
+- `/contracts`: holds pact consumer tests, generated pact file, and local copy of Open API spec for convenience
 - `/models`: holds all test data and models used by tests
+- `/prompts`: files summarising interactions with GenAI to make changes (Github copilot and Claude Code)
 - `/tests`: contains the test specs, these specs outline the tests, making use of the models to keep detail abstracted away from test intent
 - `.env.*`: easy ways to handle environment variables for this project. Not suitable to manage real credentials
-- `/prompts`: holds converations with CoPilot for visibility
 
 While not requested for this exercise. I believe that being able to reliably run tests in many places including CI, is critical. So these elements of the project are **mandatory** as far as I'm concerned.
 - `Dockerfile`: to create a Playwright test runner image
 - `dockercompose.yml`: allows the test runner and application images to be run via docker compose
 
-## Test Rationale
+## Functional Test Rationale
  
 ### UI
 One end to end journey, which establishes basic patterns. Initial page objects, data models and test structure in place. Which means we can run tests in locally, against a deployed application, and in CI. For CI, I've implemented a Docker with docker compose approach. From previous experience this also helps local development too. Especially if people "just want to run the test easily".
@@ -117,6 +117,15 @@ Tests managing their own data effectively is critical to a robust suite.
 - Invalid values in Pet Creation / edits
 
 
+## Contract tests
+> WIP while I explore basic contract testing
+
+Initial consumer driven contract tests for the Petstore API.
+
+Run the tests with `npm run contract`
+
+
 [1]: https://playwright.dev/docs/intro#installing-playwright
 [2]: https://www.docker.com/get-started/
 [3]: https://github.com/flynnbops/playwright-restful-booker
+[4]: https://github.com/flynnbops/references/blob/main/contract-testing.md

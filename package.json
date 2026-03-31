@@ -12,12 +12,14 @@
     "cloud:api": "ENV=cloud playwright test --grep @api --project=api",
     "docker-compose:ui": "docker compose up -d saucedemo petstore && docker compose build playwright && ENV=docker TRACE=on docker compose run --remove-orphans --no-deps playwright npm run docker:ui",
     "docker-compose:api": "docker compose up -d saucedemo petstore && docker compose build playwright && ENV=docker TRACE=on docker compose run --remove-orphans --no-deps playwright npm run docker:api",
-    "report:open": "playwright show-report"
+    "report:open": "playwright show-report",
+    "contract": "playwright test --project=contract --workers=1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@pact-foundation/pact": "^16.2.0",
     "@playwright/test": "^1.58.2",
     "@types/dotenv": "^8.2.3",
     "@types/node": "^24.0.4",
