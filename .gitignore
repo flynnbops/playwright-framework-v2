@@ -1,5 +1,4 @@
 # Exclude GitHub and VS Code config folders
-.github/
 .vscode/
 # Exclude specs/README.md
 specs/README.md
