@@ -11,9 +11,9 @@
  * Run via:  npx playwright test contracts/pet.pact.spec.ts --project=contract
  */
 
-import { test, expect } from '@playwright/test';
-import { PactV3, MatchersV3 } from '@pact-foundation/pact';
-import * as path from 'path';
+const { test, expect } = require('@playwright/test');
+const { PactV3, MatchersV3 } = require('@pact-foundation/pact');
+const path = require('path');
 
 const { eachLike, integer, regex } = MatchersV3;
 
@@ -23,7 +23,7 @@ const { eachLike, integer, regex } = MatchersV3;
 const provider = new PactV3({
   consumer: 'PlaywrightPetstoreConsumer',
   provider: 'PetstoreAPI',
-  dir: path.resolve(__dirname, 'pacts'),
+  dir: path.resolve(__dirname, '../../pacts'),
   logLevel: 'warn',
 });
 

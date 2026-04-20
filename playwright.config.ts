@@ -87,7 +87,7 @@ export default defineConfig({
       // Pact consumer contract tests — run independently of a live server.
       // The Pact mock provider starts its own HTTP server per interaction.
       name: 'contract',
-      testDir: './contracts',
+      testDir: './contract',
       testMatch: '**/*.pact.spec.ts',
     }
   ]

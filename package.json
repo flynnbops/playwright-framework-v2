@@ -13,7 +13,8 @@
     "docker-compose:ui": "docker compose up -d saucedemo petstore && docker compose build playwright && ENV=docker TRACE=on docker compose run --remove-orphans --no-deps playwright npm run docker:ui",
     "docker-compose:api": "docker compose up -d saucedemo petstore && docker compose build playwright && ENV=docker TRACE=on docker compose run --remove-orphans --no-deps playwright npm run docker:api",
     "report:open": "playwright show-report",
-    "contract": "playwright test --project=contract --workers=1"
+    "contract:consumer": "playwright test --project=contract --workers=1",
+    "contract:provider": "npx ts-node --esm contract/tests/provider/verify-provider.ts"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,7 @@
     "@types/dotenv": "^8.2.3",
     "@types/node": "^24.0.4",
     "dotenv": "^16.5.0",
-    "zod": "^4.1.5"
+    "zod": "^4.1.5",
+    "ts-node": "^10.9.1"
   }
 }
