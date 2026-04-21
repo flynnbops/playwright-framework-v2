@@ -24,10 +24,10 @@ services:
       - ./playwright-report:/src/playwright-report
 
 # This a docker image for the Sauce demo app, that I build previously.
-# https://hub.docker.com/r/aaronflynn490/sauce-demo
+# https://hub.docker.com/r/aaronfly1/sauce-demo/tags
 # Created from https://github.com/saucelabs/sample-app-web/blob/main/Dockerfile
   saucedemo:
-    image: aaronflynn490/sauce-demo
+    image: aaronfly1/sauce-demo:latest
     ports:
       - ${SAUCELABS_PORT:-4999}:3000
     healthcheck:
